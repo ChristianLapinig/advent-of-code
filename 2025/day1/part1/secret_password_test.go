@@ -1,4 +1,4 @@
-package main
+package part1
 
 import (
 	"os"
@@ -14,7 +14,7 @@ func TestGetPassword(t *testing.T) {
 		}
 
 		reader := strings.NewReader(string(data))
-		actual, err := getPassword(reader)
+		actual, err := GetPassword(reader)
 		if err != nil {
 			t.Fatalf("FAILED - Error while getting password: %v", err)
 		}
@@ -43,7 +43,7 @@ func TestGetPassword(t *testing.T) {
 		} {
 			t.Run(test.Name, func(t *testing.T) {
 				reader := strings.NewReader(string(test.Content))
-				actual, err := getPassword(reader)
+				actual, err := GetPassword(reader)
 				if err != nil {
 					t.Fatalf("FAILED - Error while getting password: %v", err)
 				}

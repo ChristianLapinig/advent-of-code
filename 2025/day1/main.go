@@ -1,6 +1,7 @@
 package main
 
 import (
+	"day1/part1"
 	"fmt"
 	"log"
 	"os"
@@ -19,7 +20,7 @@ func main() {
 		log.Fatalf("%v\n", err)
 	}
 	defer file.Close()
-	password, err := getPassword(file)
+	password, err := part1.GetPassword(file)
 	if err != nil {
 		fmt.Println("Error retrieving password. Exiting.")
 		log.Fatalf("%v\n", err)

@@ -1,4 +1,4 @@
-package main
+package part1
 
 import (
 	"bufio"
@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-func getPassword(r io.Reader) (int, error) {
+func GetPassword(r io.Reader) (int, error) {
 	currentDialVal := 50
 	zeroCount := 0
 	scanner := bufio.NewScanner(r)
