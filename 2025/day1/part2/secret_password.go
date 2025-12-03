@@ -40,11 +40,14 @@ func GetPassword(r io.Reader) (int, error) {
 		next := current + rot
 		wrapped := (next < 0 || next >= constants.DialSize) && current != 0
 		current = (next%constants.DialSize + constants.DialSize) % constants.DialSize
-		if current == 0 {
-			zeroCount++
-		} else if wrapped {
+		if current == 0 || wrapped {
 			zeroCount++
 		}
+		// 	if current == 0 {
+		// 		zeroCount++
+		// 	} else if wrapped {
+		// 		zeroCount++
+		// 	}
 	}
 	return zeroCount, nil
 }
