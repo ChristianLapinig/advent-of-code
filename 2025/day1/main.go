@@ -10,6 +10,10 @@ import (
 )
 
 func main() {
+	if len(os.Args) < 2 {
+		fmt.Println("Usage: go run main.go <file-path>")
+		os.Exit(1)
+	}
 	filePath := os.Args[1]
 	if filePath == "" {
 		fmt.Println("File name must be passed as an argument. Exiting.")

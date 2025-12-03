@@ -5,50 +5,44 @@ import (
 	"fmt"
 	"io"
 	"strconv"
+
+	"day1/constants"
 )
 
 func GetPassword(r io.Reader) (int, error) {
-	currentDialVal := 50
+	current := 50
 	zeroCount := 0
 	scanner := bufio.NewScanner(r)
 	for scanner.Scan() {
-		line := scanner.Text()
-		direction := line[:1]
-		rotation, err := strconv.Atoi(line[1:])
+		line := scanner.Bytes()
+		if len(line) < 2 {
+			return -1, fmt.Errorf("invalid line: %q", line)
+		}
+
+		direction := line[0]
+		rotation, err := strconv.Atoi(string(line[1:]))
 		if err != nil {
-			fmt.Println("Error converting string to number. Exiting.")
 			return -1, err
 		}
 
-		// rotations > 100 are considered a full rotation
-		// meaning we have passed 0 rotation / 100 times
-		if rotation >= 100 {
-			zeroCount += rotation / 100
-			rotation %= 100 // get the number clicks after 0 has been passed
-		}
-
-		var rotationVal int
-		if direction == "L" {
-			rotationVal = currentDialVal - rotation
-		} else { // direction == "R"
-			rotationVal = currentDialVal + rotation
-		}
-
-		// 0 has been passed while turning the dial
-		if (rotationVal < 0 || rotationVal > 100) && currentDialVal != 0 {
-			zeroCount++
-		}
-
-		if rotationVal < 0 {
-			currentDialVal = 100 + rotationVal
-		} else if rotationVal > 99 {
-			currentDialVal = rotationVal - 100
+		// count full rotations
+		if rotation < 0 {
+			zeroCount += (-rotation) / constants.DialSize
 		} else {
-			currentDialVal = rotationVal
+			zeroCount += rotation / constants.DialSize
 		}
 
-		// dial has landed on 0 or has passed 0
-		if currentDialVal == 0 {
+		rot := rotation % constants.DialSize
+		if direction == constants.DirectionLeft {
+			rot = -rot
+		}
+
+		next := current + rot
+		wrapped := (next < 0 || next >= constants.DialSize) && current != 0
+		current = (next%constants.DialSize + constants.DialSize) % constants.DialSize
+		if current == 0 {
+			zeroCount++
+		} else if wrapped {
 			zeroCount++
 		}
 	}

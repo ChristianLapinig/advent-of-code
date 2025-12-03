@@ -5,44 +5,44 @@ import (
 	"fmt"
 	"io"
 	"strconv"
+
+	"day1/constants"
 )
 
 func GetPassword(r io.Reader) (int, error) {
-	currentDialVal := 50
+	current := constants.StartingDialVal
 	zeroCount := 0
 	scanner := bufio.NewScanner(r)
 	for scanner.Scan() {
-		line := scanner.Text()
-		direction := line[:1]
-		rotation, err := strconv.Atoi(line[1:])
+		line := scanner.Bytes()
+		if len(line) < 2 {
+			return -1, fmt.Errorf("invalid line: %q", line)
+		}
+
+		direction := line[0]
+		rotation, err := strconv.Atoi(string(line[1:]))
 		if err != nil {
-			fmt.Println("Error converting string to number. Exiting.")
 			return -1, err
 		}
 
-		// rotations > 100 should be considered a full rotation
-		if rotation >= 100 {
-			rotation %= 100
+		// ignore full spins
+		if rotation >= constants.DialSize {
+			rotation %= constants.DialSize
 		}
 
-		var rotationValue int
-		if "L" == direction {
-			rotationValue = currentDialVal - rotation
-		} else { // direction == "R"
-			rotationValue = currentDialVal + rotation
+		if direction == constants.DirectionLeft {
+			rotation = -rotation
 		}
 
-		if rotationValue < 0 {
-			currentDialVal = 100 + rotationValue
-		} else if rotationValue > 99 {
-			currentDialVal = rotationValue - 100
-		} else {
-			currentDialVal = rotationValue
-		}
+		current = ((current+rotation)%constants.DialSize + constants.DialSize) % constants.DialSize
 
-		if 0 == currentDialVal {
+		if current == 0 {
 			zeroCount++
 		}
 	}
+	if err := scanner.Err(); err != nil {
+		return -1, err
+	}
+
 	return zeroCount, nil
 }
