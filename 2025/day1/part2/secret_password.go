@@ -32,12 +32,12 @@ func GetPassword(r io.Reader) (int, error) {
 			zeroCount += rotation / constants.DialSize
 		}
 
-		rot := rotation % constants.DialSize
+		rotation = rotation % constants.DialSize
 		if direction == constants.DirectionLeft {
-			rot = -rot
+			rotation = -rotation
 		}
 
-		next := current + rot
+		next := current + rotation
 		wrapped := (next < 0 || next >= constants.DialSize) && current != 0
 		current = (next%constants.DialSize + constants.DialSize) % constants.DialSize
 		if current == 0 || wrapped {
