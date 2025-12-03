@@ -43,11 +43,6 @@ func GetPassword(r io.Reader) (int, error) {
 		if current == 0 || wrapped {
 			zeroCount++
 		}
-		// 	if current == 0 {
-		// 		zeroCount++
-		// 	} else if wrapped {
-		// 		zeroCount++
-		// 	}
 	}
 	return zeroCount, nil
 }
