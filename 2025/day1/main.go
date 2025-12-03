@@ -1,10 +1,12 @@
 package main
 
 import (
-	"day1/part1"
 	"fmt"
 	"log"
 	"os"
+
+	"day1/part1"
+	"day1/part2"
 )
 
 func main() {
@@ -14,17 +16,30 @@ func main() {
 		os.Exit(1)
 	}
 
-	file, err := os.Open(filePath)
+	reader1, err := os.Open(filePath)
 	if err != nil {
 		fmt.Fprintf(os.Stdout, "Error opening file %s. Exiting.\n", filePath)
 		log.Fatalf("%v\n", err)
 	}
-	defer file.Close()
-	password, err := part1.GetPassword(file)
+	defer reader1.Close()
+	password1, err := part1.GetPassword(reader1)
 	if err != nil {
 		fmt.Println("Error retrieving password. Exiting.")
 		log.Fatalf("%v\n", err)
 	}
 
-	fmt.Printf("The password is %d\n", password)
+	reader2, err := os.Open(filePath)
+	if err != nil {
+		fmt.Fprintf(os.Stdout, "Error opening file %s. Exiting.\n", filePath)
+		log.Fatalf("%v\n", err)
+	}
+	defer reader2.Close()
+	password2, err := part2.GetPassword(reader2)
+	if err != nil {
+		fmt.Println("Error retrieving password. Exiting.")
+		log.Fatalf("%v\n", err)
+	}
+
+	fmt.Printf("The password is %d\n", password1)
+	fmt.Printf("Wait. Hold on. The correct password is %d\n", password2)
 }

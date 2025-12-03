@@ -21,7 +21,7 @@ func GetPassword(r io.Reader) (int, error) {
 		}
 
 		// rotations > 100 should be considered a full rotation
-		if rotation > 100 {
+		if rotation >= 100 {
 			rotation %= 100
 		}
 

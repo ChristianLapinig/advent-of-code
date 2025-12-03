@@ -8,7 +8,7 @@ import (
 
 func TestGetPassword(t *testing.T) {
 	t.Run("testing from file", func(t *testing.T) {
-		data, err := os.ReadFile("rotations_test.txt")
+		data, err := os.ReadFile("../rotations_test.txt")
 		if err != nil {
 			t.Fatalf("FAILED - Error loading file: %v", err)
 		}
