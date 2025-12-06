@@ -1,24 +1,20 @@
 package main
 
 import (
+	"day1/part1"
+	"day1/part2"
 	"fmt"
 	"log"
 	"os"
-
-	"day1/part1"
-	"day1/part2"
 )
 
 func main() {
 	if len(os.Args) < 2 {
+		fmt.Println("Exiting. Path to file must be passed.")
 		fmt.Println("Usage: go run main.go <file-path>")
 		os.Exit(1)
 	}
 	filePath := os.Args[1]
-	if filePath == "" {
-		fmt.Println("File name must be passed as an argument. Exiting.")
-		os.Exit(1)
-	}
 
 	reader1, err := os.Open(filePath)
 	if err != nil {
