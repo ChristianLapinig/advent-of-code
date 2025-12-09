@@ -25,6 +25,7 @@ func FindInvalidIDs(content []byte) (int, error) {
 		idRanges = append(idRanges, []int{low, high})
 	}
 
+	// TODO: Optimize this if possible
 	for _, idRange := range idRanges {
 		for i := idRange[0]; i <= idRange[1]; i++ {
 			idStr := strconv.Itoa(i)
