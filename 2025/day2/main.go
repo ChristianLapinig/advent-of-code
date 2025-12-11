@@ -1,9 +1,11 @@
 package main
 
 import (
-	"day2/part1"
 	"fmt"
 	"os"
+
+	"day2/part1"
+	"day2/part2"
 )
 
 func main() {
@@ -21,10 +23,16 @@ func main() {
 		os.Exit(1)
 	}
 
-	idSum, err := part1.FindInvalidIDs(content)
+	result1, err := part1.FindInvalidIDs(content)
 	if err != nil {
 		fmt.Println("Error:", err.Error())
 		os.Exit(1)
 	}
-	fmt.Println("Invalid product ID sum:", idSum)
+	result2, err := part2.FindInvalidIDs(content)
+	if err != nil {
+		fmt.Println("Error:", err.Error())
+		os.Exit(1)
+	}
+	fmt.Println("Part 1:", result1)
+	fmt.Println("Part 2:", result2)
 }
