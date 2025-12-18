@@ -21,20 +21,6 @@ func GetMaxVoltage(content []byte) (int, error) {
 		if err != nil {
 			return -1, fmt.Errorf("error getting max voltage from bank %s: %v", bank, err)
 		}
-
-		/* SUPER NOT OPTIMIZED */
-		//maxVoltage := 0
-		// for i := 0; i < len(bank); i++ {
-		// 	for j := i + 1; j < len(bank); j++ {
-		// 		voltageCombo := fmt.Sprintf("%s%s", string(bank[i]), string(bank[j]))
-		// 		voltage, err := strconv.Atoi(voltageCombo)
-		// 		if err != nil {
-		// 			return -1, err
-		// 		}
-		// 		maxVoltage = max(maxVoltage, voltage)
-		// 	}
-		// }
-
 		voltageSum += maxVoltage
 	}
 	return voltageSum, nil

@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"day3/part1"
+	"day3/part2"
 )
 
 func main() {
@@ -27,4 +28,10 @@ func main() {
 		log.Fatalf("error calculating result for part 1: %v", err)
 	}
 	fmt.Println("Part 1 answer: ", result1)
+
+	result2, err := part2.GetMaxVoltage(content)
+	if err != nil {
+		log.Fatalf("error calculating result for part 2: %v", err)
+	}
+	fmt.Println("Part 2 answer: ", result2)
 }
